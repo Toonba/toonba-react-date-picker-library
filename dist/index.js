@@ -1,20 +1,37 @@
-"use strict";Object.defineProperty(exports,"__esModule",{value:!0});var e=require("react"),t=require("styled-components");function a(e){return e&&"object"==typeof e&&"default"in e?e:{default:e}}var o=a(e),r=a(t);const l=t.keyframes`
+'use strict';
+
+Object.defineProperty(exports, '__esModule', { value: true });
+
+var React = require('react');
+var styled = require('styled-components');
+
+function _interopDefaultLegacy (e) { return e && typeof e === 'object' && 'default' in e ? e : { 'default': e }; }
+
+var React__default = /*#__PURE__*/_interopDefaultLegacy(React);
+var styled__default = /*#__PURE__*/_interopDefaultLegacy(styled);
+
+// Animation
+const slideInRight = styled.keyframes`
   0% { transform: translateX(50%) }
   100% { transform: translateX(0) }
-`,n=t.keyframes`
+`;
+const slideInLeft = styled.keyframes`
   0% { transform: translateX(-50%) }
   100% { transform: translateX(0) }
-`,c=r.default.div`
-  border: 1px solid ${e=>e.customStyle.primaryColor};
-  border-radius: ${e=>e.customStyle.borderRadius};
-  width: ${e=>e.customStyle.calendarWidth};
+`;
+//Calendar styles
+const CalendarWrapper = styled__default["default"].div`
+  border: 1px solid ${props => props.customStyle.primaryColor};
+  border-radius: ${props => props.customStyle.borderRadius};
+  width: ${props => props.customStyle.calendarWidth};
   margin: 10px auto;
   overflow: hidden;
-  background-color: ${e=>e.customStyle.backgroundColor};
+  background-color: ${props => props.customStyle.backgroundColor};
   box-shadow: 5px 5px 4px rgba(0, 0, 0, 0.5);
   position: absolute;
   top: 80px;
-`,i=r.default.div`
+`;
+const Header = styled__default["default"].div`
   display: flex;
   justify-content: center;
   align-items: center;
@@ -27,29 +44,29 @@
     display: flex;
     justify-content: space-between;
     align-items: center;
-    color: ${e=>e.customStyle.textColor};
+    color: ${props => props.customStyle.textColor};
 
     select {
       margin: 0 10px;
-      background-color: ${e=>e.customStyle.backgroundColor};
-      border-radius: ${e=>e.customStyle.borderRadius};
+      background-color: ${props => props.customStyle.backgroundColor};
+      border-radius: ${props => props.customStyle.borderRadius};
       padding: 2px 5px;
-      border: 1px solid ${e=>e.customStyle.primaryColor};
-      outline: ${e=>e.customStyle.primaryColor};
+      border: 1px solid ${props => props.customStyle.primaryColor};
+      outline: ${props => props.customStyle.primaryColor};
       font-size: 1.1em;
       font-weight: bold;
-      color: ${e=>e.customStyle.textColor};
+      color: ${props => props.customStyle.textColor};
     }
   }
 
   i {
     cursor: pointer;
     font-size: 1.3rem;
-    color: ${e=>e.customStyle.primaryColor};
+    color: ${props => props.customStyle.primaryColor};
   }
 
   i:hover {
-    color: ${e=>e.customStyle.primaryColorHover};
+    color: ${props => props.customStyle.primaryColorHover};
   }
 
   .fa-calendar-day {
@@ -57,11 +74,11 @@
     margin: 0;
     width: 50%;
     font-weight: bold;
-    color: ${e=>e.customStyle.textColor};
+    color: ${props => props.customStyle.textColor};
     opacity: 0.7;
   }
   .fa-calendar-day:hover {
-    color: ${e=>e.customStyle.primaryColorHover};
+    color: ${props => props.customStyle.primaryColorHover};
     opacity: 1;
   }
 
@@ -69,20 +86,24 @@
     color: lightgrey;
     opacity: 0.3;
   }
-`,s=r.default.div`
+`;
+const Body = styled__default["default"].div`
   margin: 5px auto;
   width: 87%;
-  color: ${e=>e.customStyle.textColor};
-`,u=r.default.div`
+  color: ${props => props.customStyle.textColor};
+`;
+const SevenColGrid = styled__default["default"].div`
   display: grid;
   grid-template-columns: repeat(7, 1fr);
   text-align: center;
-  color: ${e=>e.customStyle.textColor};
+  color: ${props => props.customStyle.textColor};
 
-  ${({heading:e})=>e&&t.css`
+  ${({
+  heading
+}) => heading && styled.css`
       font-weight: bold;
       border-radius: 7px;
-      background-color: ${e=>e.customStyle.primaryColor};
+      background-color: ${props => props.customStyle.primaryColor};
       p {
         margin: 0em;
         padding: 0.7em;
@@ -117,18 +138,23 @@
   }
 
   .today {
-    background-color: ${e=>e.customStyle.secondaryColor};
+    background-color: ${props => props.customStyle.secondaryColor};
   }
 
   .selected,
   .day:hover {
-    background-color: ${e=>e.customStyle.primaryColor};
+    background-color: ${props => props.customStyle.primaryColor};
   }
 
-  ${({isAnimating:e})=>e&&t.css`
-      animation: ${({direction:e})=>"right"===e?l:n} 0.3s ease-in-out;
+  ${({
+  isAnimating
+}) => isAnimating && styled.css`
+      animation: ${({
+  direction
+}) => direction === 'right' ? slideInRight : slideInLeft} 0.3s ease-in-out;
     `}
-`,d=r.default.div`
+`;
+const ButtonContainer = styled__default["default"].div`
   width: 100%;
   display: flex;
   justify-content: center;
@@ -141,48 +167,320 @@
     padding: 1em 2em;
     font-size: 1em;
     font-weight: bold;
-    border-radius: ${e=>e.customStyle.borderRadius};
+    border-radius: ${props => props.customStyle.borderRadius};
     cursor: pointer;
   }
 
   .confirm {
-    background-color: ${e=>e.customStyle.primaryColor};
+    background-color: ${props => props.customStyle.primaryColor};
   }
 
   .confirm:hover {
-    background-color: ${e=>e.customStyle.primaryColorHover};
+    background-color: ${props => props.customStyle.primaryColorHover};
   }
 
   .cancel {
-    background-color: ${e=>e.customStyle.secondaryColor};
+    background-color: ${props => props.customStyle.secondaryColor};
   }
   .cancel:hover {
-    background-color: ${e=>e.customStyle.secondaryColorHover};
+    background-color: ${props => props.customStyle.secondaryColorHover};
   }
-`;function m({maxDate:t,minDate:a,onSelection:r,customStyle:l,onClose:n,onCancel:m,isSelected:g}){const[y,f]=e.useState((new Date).getMonth()),[p,h]=e.useState((new Date).getFullYear()),[S,b]=e.useState(!1),[x,v]=e.useState(""),[$,D]=e.useState(g),C=[],w=["Mon","Tue","Wed","Thu","Fri","Sat","Sun"],k=e=>{S||(b(!0),v(e),setTimeout((()=>{b(!1)}),300))};for(let e=a.getFullYear();e<=t.getFullYear();e++)C.push(e);const E=a.getTime()>new Date(p,y,a.getDate()-1).getTime(),F=t.getTime()<new Date(p,y,t.getDate()+1).getTime();return e.useEffect((()=>{$ instanceof Date&&(h($.getFullYear()),f($.getMonth()))}),[$]),o.default.createElement(c,{customStyle:l},o.default.createElement(i,{customStyle:l},E?o.default.createElement("i",{className:"fa-solid fa-chevron-left disabled"}):o.default.createElement("i",{className:"fa-solid fa-chevron-left",onClick:()=>{k("left"),y>0?f((e=>e-1)):(f(11),h((e=>e-1)))}}),o.default.createElement("p",null,o.default.createElement("i",{className:"fa-solid fa-calendar-day",onClick:()=>{new Date(p,y,1).getFullYear()>(new Date).getFullYear()?k("left"):new Date(p,y,1).getFullYear()===(new Date).getFullYear()?new Date(p,y,1).getMonth()>(new Date).getMonth()?k("left"):new Date(p,y,1).getMonth()===(new Date).getMonth()||k("right"):k("right"),f((new Date).getMonth()),h((new Date).getFullYear())}}),o.default.createElement("select",{name:"month",value:y,onChange:e=>{parseInt(y)>parseInt(e.target.value)?k("left"):parseInt(y)<parseInt(e.target.value)&&k("right"),f(parseInt(e.target.value))}},["January","February","March","April","May","June","July","August","September","October","November","December"].map(((e,t)=>o.default.createElement("option",{value:t,key:`${t}-${e}`},e)))),o.default.createElement("select",{name:"year",value:p,onChange:e=>{parseInt(p)>parseInt(e.target.value)?k("left"):parseInt(p)<parseInt(e.target.value)&&k("right"),h(parseInt(e.target.value))}},C.map(((e,t)=>o.default.createElement("option",{value:e,key:`${t}-${e}`},e))))),F?o.default.createElement("i",{className:"fa-solid fa-chevron-right disabled"}):o.default.createElement("i",{className:"fa-solid fa-chevron-right",onClick:()=>{k("right"),parseInt(y)<11?f((e=>e+1)):(f(0),h((e=>e+1)))}})),o.default.createElement(s,{customStyle:l},o.default.createElement(u,{heading:!0,customStyle:l},w.map(((e,t)=>o.default.createElement("p",{key:`${t}-${e}`,className:"Sun"===e?"sunday":" "},e)))),o.default.createElement(u,{onClick:e=>{if(e.target.classList.contains("day")&&!e.target.classList.contains("not-a-day")){const t=parseInt(e.target.getAttribute("data-day")),a=new Date(p,y,t);D(a),r(a)}},customStyle:l,isAnimating:S,direction:x},((e,t)=>{const a=Math.abs((t-e)/1),o=new Date(p,y,1).getDay(),r=w.length,l=(o-1+r)%r;return[...Array.from({length:l}).fill(""),...Array.from({length:a}).map(((t,a)=>e+a))]})(1,(M=p,I=y,new Date(M,I+1,0).getDate()+1)).map(((e,t)=>o.default.createElement("p",{key:`${e}-${t}`,className:`day ${p===(new Date).getFullYear()&&y===(new Date).getMonth()&&e===(new Date).getDate()?"today":" "} ${0===new Date(p,y,e).getDay()?"sunday":" "} ${""===$?"":p===$.getFullYear()&&y===$.getMonth()&&e===$.getDate()?"selected":" "} ${""===e?"not-a-day":""}`,"data-day":e},e))))),o.default.createElement(d,{customStyle:l},o.default.createElement("button",{className:"cancel",onClick:m},"Cancel"),o.default.createElement("button",{className:"confirm",onClick:n},"Confirm")));var M,I}const g=r.default.div`
+`;
+
+/**
+ *
+ * @param {Date} maxDate maximum date it will be possible to reach with datePicker, you can change it in config.js
+ * @param {Date} minDate minimum date it will be possible to reach with datePicker, you can change it in config.js
+ * @param {Object} style regroup few parameter that can be easily changed to adjust component, you can change it in config.js
+ * @param {function} onClose function allowing to close calendar and get selected value in parent component
+ * @returns {Component} Calendar used in datepicker
+ */
+
+function Calendar({
+  maxDate,
+  minDate,
+  onSelection,
+  customStyle,
+  onClose,
+  onCancel,
+  isSelected
+}) {
+  const [currentMonth, setCurrentMonth] = React.useState(new Date().getMonth());
+  const [currentYear, setCurrentYear] = React.useState(new Date().getFullYear());
+  const [isAnimating, setIsAnimating] = React.useState(false);
+  const [direction, setDirection] = React.useState('');
+  const [selectedDate, setSelectedDate] = React.useState(isSelected);
+  const yearRange = [];
+  const monthNames = ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'];
+  const dayNames = ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun'];
+
+  //function handling how the calandar should look to get the 1 day of month correpsonding to the actual first day
+  const getNumberOfDaysInMonth = (year, month) => {
+    return new Date(year, month + 1, 0).getDate();
+  };
+  const range = (start, end) => {
+    const length = Math.abs((end - start) / 1);
+    const firstDayOfMonth = new Date(currentYear, currentMonth, 1).getDay();
+    const daysInWeek = dayNames.length;
+    const startOffset = (firstDayOfMonth - 1 + daysInWeek) % daysInWeek;
+    const offsetArray = Array.from({
+      length: startOffset
+    }).fill('');
+    const numberArray = Array.from({
+      length
+    }).map((_, index) => start + index);
+    return [...offsetArray, ...numberArray];
+  };
+
+  // function handling animation of calendar when month or year is changing
+  const handleSlide = direction => {
+    if (!isAnimating) {
+      setIsAnimating(true);
+      setDirection(direction);
+      setTimeout(() => {
+        setIsAnimating(false);
+      }, 300);
+    }
+  };
+  const handleChangeYear = event => {
+    if (parseInt(currentYear) > parseInt(event.target.value)) {
+      handleSlide('left');
+    } else if (parseInt(currentYear) < parseInt(event.target.value)) {
+      handleSlide('right');
+    }
+    setCurrentYear(parseInt(event.target.value));
+  };
+  const handleChangeMonth = event => {
+    if (parseInt(currentMonth) > parseInt(event.target.value)) {
+      handleSlide('left');
+    } else if (parseInt(currentMonth) < parseInt(event.target.value)) {
+      handleSlide('right');
+    }
+    setCurrentMonth(parseInt(event.target.value));
+  };
+  for (let i = minDate.getFullYear(); i <= maxDate.getFullYear(); i++) {
+    yearRange.push(i);
+  }
+  const beforeMinDate = minDate.getTime() > new Date(currentYear, currentMonth, minDate.getDate() - 1).getTime();
+  const afterMaxDate = maxDate.getTime() < new Date(currentYear, currentMonth, maxDate.getDate() + 1).getTime();
+
+  //Function handling an action made by user
+  const nextMonth = () => {
+    handleSlide('right');
+    if (parseInt(currentMonth) < 11) {
+      setCurrentMonth(prev => prev + 1);
+    } else {
+      setCurrentMonth(0);
+      setCurrentYear(prev => prev + 1);
+    }
+  };
+  const previousMonth = () => {
+    handleSlide('left');
+    if (currentMonth > 0) {
+      setCurrentMonth(prev => prev - 1);
+    } else {
+      setCurrentMonth(11);
+      setCurrentYear(prev => prev - 1);
+    }
+  };
+  const backToday = () => {
+    if (new Date(currentYear, currentMonth, 1).getFullYear() > new Date().getFullYear()) {
+      handleSlide('left');
+    } else if (new Date(currentYear, currentMonth, 1).getFullYear() === new Date().getFullYear()) {
+      if (new Date(currentYear, currentMonth, 1).getMonth() > new Date().getMonth()) {
+        handleSlide('left');
+      } else if (new Date(currentYear, currentMonth, 1).getMonth() === new Date().getMonth()) ; else {
+        handleSlide('right');
+      }
+    } else {
+      handleSlide('right');
+    }
+    setCurrentMonth(new Date().getMonth());
+    setCurrentYear(new Date().getFullYear());
+  };
+  const handleSelection = event => {
+    if (event.target.classList.contains('day') && !event.target.classList.contains('not-a-day')) {
+      const selectedDay = parseInt(event.target.getAttribute('data-day'));
+      const dateSelected = new Date(currentYear, currentMonth, selectedDay);
+      setSelectedDate(dateSelected);
+      onSelection(dateSelected);
+    }
+  };
+  React.useEffect(() => {
+    if (selectedDate instanceof Date) {
+      setCurrentYear(selectedDate.getFullYear());
+      setCurrentMonth(selectedDate.getMonth());
+    }
+  }, [selectedDate]);
+  return /*#__PURE__*/React__default["default"].createElement(CalendarWrapper, {
+    customStyle: customStyle
+  }, /*#__PURE__*/React__default["default"].createElement(Header, {
+    customStyle: customStyle
+  }, beforeMinDate ? /*#__PURE__*/React__default["default"].createElement("i", {
+    className: "fa-solid fa-chevron-left disabled"
+  }) : /*#__PURE__*/React__default["default"].createElement("i", {
+    className: "fa-solid fa-chevron-left",
+    onClick: previousMonth
+  }), /*#__PURE__*/React__default["default"].createElement("p", null, /*#__PURE__*/React__default["default"].createElement("i", {
+    className: "fa-solid fa-calendar-day",
+    onClick: backToday
+  }), /*#__PURE__*/React__default["default"].createElement("select", {
+    name: "month",
+    value: currentMonth,
+    onChange: handleChangeMonth
+  }, monthNames.map((monthName, index) => /*#__PURE__*/React__default["default"].createElement("option", {
+    value: index,
+    key: `${index}-${monthName}`
+  }, monthName))), /*#__PURE__*/React__default["default"].createElement("select", {
+    name: "year",
+    value: currentYear,
+    onChange: handleChangeYear
+  }, yearRange.map((year, index) => /*#__PURE__*/React__default["default"].createElement("option", {
+    value: year,
+    key: `${index}-${year}`
+  }, year)))), afterMaxDate ? /*#__PURE__*/React__default["default"].createElement("i", {
+    className: "fa-solid fa-chevron-right disabled"
+  }) : /*#__PURE__*/React__default["default"].createElement("i", {
+    className: "fa-solid fa-chevron-right",
+    onClick: nextMonth
+  })), /*#__PURE__*/React__default["default"].createElement(Body, {
+    customStyle: customStyle
+  }, /*#__PURE__*/React__default["default"].createElement(SevenColGrid, {
+    heading: true,
+    customStyle: customStyle
+  }, dayNames.map((day, index) => /*#__PURE__*/React__default["default"].createElement("p", {
+    key: `${index}-${day}`,
+    className: day === 'Sun' ? 'sunday' : ' '
+  }, day))), /*#__PURE__*/React__default["default"].createElement(SevenColGrid, {
+    onClick: handleSelection,
+    customStyle: customStyle,
+    isAnimating: isAnimating,
+    direction: direction
+  }, range(1, getNumberOfDaysInMonth(currentYear, currentMonth) + 1).map((day, index) => /*#__PURE__*/React__default["default"].createElement("p", {
+    key: `${day}-${index}`,
+    className: `day ${currentYear === new Date().getFullYear() ? currentMonth === new Date().getMonth() ? day === new Date().getDate() ? 'today' : ' ' : ' ' : ' '} ${new Date(currentYear, currentMonth, day).getDay() === 0 ? 'sunday' : ' '} ${selectedDate === '' ? '' : currentYear === selectedDate.getFullYear() ? currentMonth === selectedDate.getMonth() ? day === selectedDate.getDate() ? 'selected' : ' ' : ' ' : ' '} ${day === '' ? 'not-a-day' : ''}`,
+    "data-day": day
+  }, day)))), /*#__PURE__*/React__default["default"].createElement(ButtonContainer, {
+    customStyle: customStyle
+  }, /*#__PURE__*/React__default["default"].createElement("button", {
+    className: "cancel",
+    onClick: onCancel
+  }, "Cancel"), /*#__PURE__*/React__default["default"].createElement("button", {
+    className: "confirm",
+    onClick: onClose
+  }, "Confirm")));
+}
+
+// DatePicker Style
+
+const PickerWrapper = styled__default["default"].div`
   margin: 50px auto;
   display: flex;
   flex-direction: column;
   justify-content: center;
   align-items: center;
-`,y=r.default.input`
-  width: ${e=>e.customStyle.inputWidth};
+`;
+const DatePickerInput = styled__default["default"].input`
+  width: ${props => props.customStyle.inputWidth};
   padding: 5px;
-  background-color: ${e=>e.customStyle.inputBackground};
+  background-color: ${props => props.customStyle.inputBackground};
   text-align: center;
   position: relative;
   border: 1px solid black;
   border-radius: 5px;
   margin: 0px auto;
-  color: ${e=>e.customStyle.textColor};
+  color: ${props => props.customStyle.textColor};
   position: relative;
 
   :focus {
-    outline: solid 1px ${e=>e.customStyle.primaryColor};
-    border: solid 1px ${e=>e.customStyle.primaryColor};
+    outline: solid 1px ${props => props.customStyle.primaryColor};
+    border: solid 1px ${props => props.customStyle.primaryColor};
   }
 
   .hide {
     display: none;
   }
-`;exports.DatePicker=function({maxDate:t,minDate:a,customStyle:r,getData:l}){a>t&&alert("Problème minDate > maxDate");const[n,c]=e.useState(!1),[i,s]=e.useState(""),[u,d]=e.useState(""),f=e.useRef(null),p=e=>{f.current&&!f.current.contains(e.target)&&c(!1)};return e.useEffect((()=>(document.addEventListener("click",p),()=>{document.removeEventListener("click",p)})),[]),o.default.createElement(o.default.Fragment,null,o.default.createElement(g,{ref:f,className:"datePicker-container",customStyle:r},o.default.createElement(y,{type:"text",onClick:()=>{c(!n)},onChange:e=>{s(e.target.value)},value:i,customStyle:r}),!0===n?o.default.createElement(m,{maxDate:t,minDate:a,onSelection:e=>{s(e.toLocaleDateString()),d(e),l(e)},onClose:()=>{""===i?alert("please select a date"):(c(!1),console.log(u))},onCancel:()=>{s(""),d(""),c(!1)},customStyle:r,isSelected:u}):null))};
+`;
+
+/**
+ *
+ * @param {Date} maxDate maximum date it will be possible to reach with datePicker, you can change it in config.js
+ * @param {Date} minDate minimum date it will be possible to reach with datePicker, you can change it in config.js
+ * @param {Object} style regroup few parameter that can be easily changed to adjust component, you can change it in config.js
+ * @param {function} getData callback function to pass to the component to be able to access the selected. /!\argument of this function will be an object Date s
+ * @returns {Component} datePicker
+ */
+
+function DatePicker({
+  maxDate,
+  minDate,
+  customStyle,
+  getData
+}) {
+  //Check to ensure user didn't made mistake with min and max Date
+  if (minDate > maxDate) {
+    alert('Problème minDate > maxDate');
+  }
+  const [isOpen, setIsOpen] = React.useState(false);
+  const [inputValue, setInputValue] = React.useState('');
+  const [selectedDate, setSelectedDate] = React.useState('');
+  const datePickerContainerRef = React.useRef(null);
+
+  // function handling when calendar should be hidden
+  const openClose = () => {
+    setIsOpen(!isOpen);
+  };
+  const handleClickOutside = e => {
+    if (datePickerContainerRef.current && !datePickerContainerRef.current.contains(e.target)) {
+      setIsOpen(false);
+    }
+  };
+  const handleDateSelection = selectedValue => {
+    setInputValue(selectedValue.toLocaleDateString());
+    setSelectedDate(selectedValue);
+    getData(selectedValue);
+  };
+  const handleCloseCalendar = () => {
+    if (inputValue === '') {
+      alert('please select a date');
+    } else {
+      setIsOpen(false);
+      console.log(selectedDate);
+    }
+  };
+  const handleCancelButton = () => {
+    setInputValue('');
+    setSelectedDate('');
+    setIsOpen(false);
+  };
+  const handleChange = event => {
+    setInputValue(event.target.value);
+  };
+  React.useEffect(() => {
+    document.addEventListener('click', handleClickOutside);
+    return () => {
+      document.removeEventListener('click', handleClickOutside);
+    };
+  }, []);
+  return /*#__PURE__*/React__default["default"].createElement(React__default["default"].Fragment, null, /*#__PURE__*/React__default["default"].createElement(PickerWrapper, {
+    ref: datePickerContainerRef,
+    className: "datePicker-container",
+    customStyle: customStyle
+  }, /*#__PURE__*/React__default["default"].createElement(DatePickerInput, {
+    type: "text",
+    onClick: openClose,
+    onChange: handleChange,
+    value: inputValue,
+    customStyle: customStyle
+  }), isOpen === true ? /*#__PURE__*/React__default["default"].createElement(Calendar, {
+    maxDate: maxDate,
+    minDate: minDate,
+    onSelection: handleDateSelection,
+    onClose: handleCloseCalendar,
+    onCancel: handleCancelButton,
+    customStyle: customStyle,
+    isSelected: selectedDate
+  }) : null));
+}
+
+exports.DatePicker = DatePicker;

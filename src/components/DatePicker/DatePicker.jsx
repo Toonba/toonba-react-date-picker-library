@@ -48,6 +48,7 @@ export function DatePicker({ maxDate, minDate, customStyle, getData }) {
   if (minDate > maxDate) {
     alert('Problème minDate > maxDate')
   }
+  
 
   const [isOpen, setIsOpen] = useState(false)
   const [inputValue, setInputValue] = useState('')

@@ -2,12 +2,17 @@
   "name": "toonba-react-date-picker-library",
   "version": "1.0.0",
   "description": "A simple date picker react component ",
-  "main": "index.js",
+  "main": "dist/index.js",
+  "module": "dist/index.es.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "storybook": "storybook dev -p 6006",
     "build-storybook": "storybook build",
     "build-lib": "rollup -c"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Toonba/toonba-react-date-picker-library.git"
   },
   "author": "toonba",
   "license": "MIT",
@@ -30,12 +35,13 @@
     "rollup-plugin-babel": "^4.4.0",
     "rollup-plugin-peer-deps-external": "^2.2.4",
     "rollup-plugin-terser": "^7.0.2",
-    "storybook": "^7.0.23"
+    "storybook": "^7.0.23",
+    "styled-components": "^5.3.10"
   },
   "peerDependencies": {
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
-    "styled-component": "^2.8.0"
+    "styled-component": "^5.3.10"
   },
   "dependencies": {
     "@rollup/plugin-commonjs": "^25.0.2"
