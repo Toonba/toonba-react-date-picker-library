@@ -1,9 +1,14 @@
 {
   "name": "toonba-react-date-picker-library",
-  "version": "1.0.0",
+  "version": "1.0.10",
   "description": "A simple date picker react component ",
   "main": "dist/index.js",
   "module": "dist/index.es.js",
+  "files": [
+    "dist/",
+    "README.md",
+    "RELEASE.md"
+  ],
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "storybook": "storybook dev -p 6006",
@@ -41,7 +46,7 @@
   "peerDependencies": {
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
-    "styled-component": "^5.3.10"
+    "styled-components": "^5.3.10"
   },
   "dependencies": {
     "@rollup/plugin-commonjs": "^25.0.2"

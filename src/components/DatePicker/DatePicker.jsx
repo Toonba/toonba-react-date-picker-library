@@ -5,7 +5,6 @@ import styled from 'styled-components'
 // DatePicker Style
 
 const PickerWrapper = styled.div`
-  margin: 50px auto;
   display: flex;
   flex-direction: column;
   justify-content: center;
@@ -39,16 +38,16 @@ const DatePickerInput = styled.input`
  * @param {Date} maxDate maximum date it will be possible to reach with datePicker, you can change it in config.js
  * @param {Date} minDate minimum date it will be possible to reach with datePicker, you can change it in config.js
  * @param {Object} style regroup few parameter that can be easily changed to adjust component, you can change it in config.js
- * @param {function} getData callback function to pass to the component to be able to access the selected. /!\argument of this function will be an object Date s
+ * @param {function} getData callback function to pass to the component to be able to access the selected. /!\argument of this function will be an object Date
+ * @param {String} inputReset this parameter allow you to passe '' so that you can handle a reset once a form is validated.
  * @returns {Component} datePicker
  */
 
-export function DatePicker({ maxDate, minDate, customStyle, getData }) {
+export function DatePicker({ maxDate, minDate, customStyle, getData, inputReset }) {
   //Check to ensure user didn't made mistake with min and max Date
   if (minDate > maxDate) {
     alert('Problème minDate > maxDate')
   }
-  
 
   const [isOpen, setIsOpen] = useState(false)
   const [inputValue, setInputValue] = useState('')
@@ -66,8 +65,19 @@ export function DatePicker({ maxDate, minDate, customStyle, getData }) {
     }
   }
 
+  const formatDate = (date) => {
+    const month = date.getMonth() + 1
+    const day = date.getDate()
+    const year = date.getFullYear()
+
+    const formattedMonth = month < 10 ? `0${month}` : month
+    const formattedDay = day < 10 ? `0${day}` : day
+
+    return `${formattedMonth}/${formattedDay}/${year}`
+  }
+
   const handleDateSelection = (selectedValue) => {
-    setInputValue(selectedValue.toLocaleDateString())
+    setInputValue(formatDate(selectedValue))
     setSelectedDate(selectedValue)
     getData(selectedValue)
   }
@@ -88,7 +98,14 @@ export function DatePicker({ maxDate, minDate, customStyle, getData }) {
   }
 
   const handleChange = (event) => {
-    setInputValue(event.target.value)
+    if (isNaN(new Date(event.target.value))) {
+      alert('Invalid Format Date please use MM/DD/YYYY')
+      setInputValue('')
+    } else {
+      setInputValue(event.target.value)
+      setSelectedDate(new Date(event.target.value))
+      getData(new Date(event.target.value))
+    }
   }
 
   useEffect(() => {
@@ -98,10 +115,17 @@ export function DatePicker({ maxDate, minDate, customStyle, getData }) {
     }
   }, [])
 
+  useEffect(() => {
+    if (inputReset === '') {
+      setInputValue('')
+      setSelectedDate('')
+    }
+  }, [inputReset])
+
   return (
     <>
       <PickerWrapper ref={datePickerContainerRef} className="datePicker-container" customStyle={customStyle}>
-        <DatePickerInput type="text" onClick={openClose} onChange={handleChange} value={inputValue} customStyle={customStyle}></DatePickerInput>
+        <DatePickerInput type="text" onClick={openClose} placeholder="MM/DD/YYYY" onChange={handleChange} value={inputValue} customStyle={customStyle}></DatePickerInput>
         {isOpen === true ? <Calendar maxDate={maxDate} minDate={minDate} onSelection={handleDateSelection} onClose={handleCloseCalendar} onCancel={handleCancelButton} customStyle={customStyle} isSelected={selectedDate} /> : null}
       </PickerWrapper>
     </>

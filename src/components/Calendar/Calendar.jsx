@@ -21,7 +21,8 @@ const CalendarWrapper = styled.div`
   background-color: ${(props) => props.customStyle.backgroundColor};
   box-shadow: 5px 5px 4px rgba(0, 0, 0, 0.5);
   position: absolute;
-  top: 80px;
+  top: 350px;
+  z-index: 10;
 `
 const Header = styled.div`
   display: flex;
@@ -302,6 +303,12 @@ export function Calendar({ maxDate, minDate, onSelection, customStyle, onClose, 
       setCurrentMonth(selectedDate.getMonth())
     }
   }, [selectedDate])
+
+  useEffect(() => {
+    if (isSelected === '') {
+      setSelectedDate('')
+    }
+  }, [isSelected])
 
   return (
     <CalendarWrapper customStyle={customStyle}>

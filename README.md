@@ -10,7 +10,7 @@ A flexible and customizable date picker component for React applications.
 Install the package using npm:
 
 ```
-npm install react-date-picker-toonba
+npm install toonba-react-date-picker-library
 ```
 
 # Usage
@@ -19,13 +19,13 @@ Import the DatePicker component and built in configuration and use it in your Re
 
 ```js
 import React from 'react'
-import { DatePicker, config } from 'react-date-picker-toonba'
+import { config, DatePicker } from 'toonba-react-date-picker-library'
 
 function App() {
   return (
     <div>
       <h1>Select a Date</h1>
-      <DatePicker minDate={config.minDate} maxDate={config.maxDate} customStyle={config.lightTheme} />
+      <DatePicker minDate={config.minDate} maxDate={config.maxDate} customStyle={config.lightTheme} getData={yourCustomeFunction} inputReset={yourReset} />
     </div>
   )
 }
@@ -39,6 +39,8 @@ The DatePicker component accepts the following props:
   <li>minDate: Minimum selectable date.</li>
   <li>maxDate: Maximum selectable date.</li>
   <li>customeStyle: object containing custome Style</li>
+  <li>getData : is the function that allow you to retrieve the date selected it will be a Date object</li>
+  <li>inputReset : string that will allow you to reset the datePicker if you pass '' </li>
 </ul>
 
 In the config file you will find minDate en maxDate + 2 custome Style (dark and light mode), you can create your own custome style it must look like the one in config
@@ -57,6 +59,7 @@ const config = {
     secondaryColorHover: 'rgba(192, 192, 192, 0.7)',
     textColor: 'black',
     inputBackground: 'white'
+    inputWidth: '200px'
   },
   darkTheme: {
     borderRadius: '7px',

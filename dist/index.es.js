@@ -1,6 +1,38 @@
 import React, { useState, useEffect, useRef } from 'react';
 import styled, { keyframes, css } from 'styled-components';
 
+const config = {
+  minDate: new Date('01.01.2020'),
+  maxDate: new Date('12.31.2025'),
+  lightTheme: {
+    borderRadius: '7px',
+    // handle border-radius for focused input, calendar Wrapper, select input, current day
+    calendarWidth: '500px',
+    // handle width of calandarWrapper
+    backgroundColor: 'white',
+    // handle background color for callandar Wrapper, select and input
+    primaryColor: 'rgba(145, 175, 37, 0.3)',
+    primaryColorHover: 'rgba(145, 175, 37, 0.6)',
+    secondaryColor: 'rgba(192, 192, 192, 0.3)',
+    secondaryColorHover: 'rgba(192, 192, 192, 0.7)',
+    textColor: 'black',
+    inputBackground: 'white',
+    inputWidth: '200px'
+  },
+  darkTheme: {
+    borderRadius: '7px',
+    calendarWidth: '500px',
+    backgroundColor: ' #121212',
+    primaryColor: 'rgba(187, 134, 252, 0.5)',
+    primaryColorHover: 'rgba(187, 134, 252, 0.9)',
+    secondaryColor: 'rgba(192, 192, 192, 0.6)',
+    secondaryColorHover: 'rgba(255, 255, 255, 0.9)',
+    textColor: 'white',
+    inputBackground: 'rgba(192, 192, 192, 0.6)',
+    inputWidth: '200px'
+  }
+};
+
 // Animation
 const slideInRight = keyframes`
   0% { transform: translateX(50%) }
@@ -20,7 +52,8 @@ const CalendarWrapper = styled.div`
   background-color: ${props => props.customStyle.backgroundColor};
   box-shadow: 5px 5px 4px rgba(0, 0, 0, 0.5);
   position: absolute;
-  top: 80px;
+  top: 350px;
+  z-index: 10;
 `;
 const Header = styled.div`
   display: flex;
@@ -303,6 +336,11 @@ function Calendar({
       setCurrentMonth(selectedDate.getMonth());
     }
   }, [selectedDate]);
+  useEffect(() => {
+    if (isSelected === '') {
+      setSelectedDate('');
+    }
+  }, [isSelected]);
   return /*#__PURE__*/React.createElement(CalendarWrapper, {
     customStyle: customStyle
   }, /*#__PURE__*/React.createElement(Header, {
@@ -365,7 +403,6 @@ function Calendar({
 // DatePicker Style
 
 const PickerWrapper = styled.div`
-  margin: 50px auto;
   display: flex;
   flex-direction: column;
   justify-content: center;
@@ -398,7 +435,8 @@ const DatePickerInput = styled.input`
  * @param {Date} maxDate maximum date it will be possible to reach with datePicker, you can change it in config.js
  * @param {Date} minDate minimum date it will be possible to reach with datePicker, you can change it in config.js
  * @param {Object} style regroup few parameter that can be easily changed to adjust component, you can change it in config.js
- * @param {function} getData callback function to pass to the component to be able to access the selected. /!\argument of this function will be an object Date s
+ * @param {function} getData callback function to pass to the component to be able to access the selected. /!\argument of this function will be an object Date
+ * @param {String} inputReset this parameter allow you to passe '' so that you can handle a reset once a form is validated.
  * @returns {Component} datePicker
  */
 
@@ -406,7 +444,8 @@ function DatePicker({
   maxDate,
   minDate,
   customStyle,
-  getData
+  getData,
+  inputReset
 }) {
   //Check to ensure user didn't made mistake with min and max Date
   if (minDate > maxDate) {
@@ -426,8 +465,16 @@ function DatePicker({
       setIsOpen(false);
     }
   };
+  const formatDate = date => {
+    const month = date.getMonth() + 1;
+    const day = date.getDate();
+    const year = date.getFullYear();
+    const formattedMonth = month < 10 ? `0${month}` : month;
+    const formattedDay = day < 10 ? `0${day}` : day;
+    return `${formattedMonth}/${formattedDay}/${year}`;
+  };
   const handleDateSelection = selectedValue => {
-    setInputValue(selectedValue.toLocaleDateString());
+    setInputValue(formatDate(selectedValue));
     setSelectedDate(selectedValue);
     getData(selectedValue);
   };
@@ -445,7 +492,14 @@ function DatePicker({
     setIsOpen(false);
   };
   const handleChange = event => {
-    setInputValue(event.target.value);
+    if (isNaN(new Date(event.target.value))) {
+      alert('Invalid Format Date please use MM/DD/YYYY');
+      setInputValue('');
+    } else {
+      setInputValue(event.target.value);
+      setSelectedDate(new Date(event.target.value));
+      getData(new Date(event.target.value));
+    }
   };
   useEffect(() => {
     document.addEventListener('click', handleClickOutside);
@@ -453,6 +507,12 @@ function DatePicker({
       document.removeEventListener('click', handleClickOutside);
     };
   }, []);
+  useEffect(() => {
+    if (inputReset === '') {
+      setInputValue('');
+      setSelectedDate('');
+    }
+  }, [inputReset]);
   return /*#__PURE__*/React.createElement(React.Fragment, null, /*#__PURE__*/React.createElement(PickerWrapper, {
     ref: datePickerContainerRef,
     className: "datePicker-container",
@@ -460,6 +520,7 @@ function DatePicker({
   }, /*#__PURE__*/React.createElement(DatePickerInput, {
     type: "text",
     onClick: openClose,
+    placeholder: "MM/DD/YYYY",
     onChange: handleChange,
     value: inputValue,
     customStyle: customStyle
@@ -474,4 +535,4 @@ function DatePicker({
   }) : null));
 }
 
-export { DatePicker };
+export { DatePicker, config };
