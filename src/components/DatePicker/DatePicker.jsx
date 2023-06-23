@@ -98,13 +98,21 @@ export function DatePicker({ maxDate, minDate, customStyle, getData, inputReset 
   }
 
   const handleChange = (event) => {
-    if (isNaN(new Date(event.target.value))) {
-      alert('Invalid Format Date please use MM/DD/YYYY')
-      setInputValue('')
-    } else {
-      setInputValue(event.target.value)
-      setSelectedDate(new Date(event.target.value))
-      getData(new Date(event.target.value))
+    setInputValue(event.target.value)
+  }
+
+  const handleCheckDate = (event) => {
+    if (event.target.value !== '') {
+      if (isNaN(new Date(event.target.value))) {
+        alert('Invalid Format Date please use MM/DD/YYYY')
+        setInputValue('')
+      } else if (new Date(event.target.value).getTime() < minDate.getTime() || new Date(event.target.value).getTime() > maxDate.getTime()) {
+        alert('Date out of allowed Range')
+        setInputValue('')
+      } else {
+        setSelectedDate(new Date(event.target.value))
+        getData(new Date(event.target.value))
+      }
     }
   }
 
@@ -125,7 +133,7 @@ export function DatePicker({ maxDate, minDate, customStyle, getData, inputReset 
   return (
     <>
       <PickerWrapper ref={datePickerContainerRef} className="datePicker-container" customStyle={customStyle}>
-        <DatePickerInput type="text" onClick={openClose} placeholder="MM/DD/YYYY" onChange={handleChange} value={inputValue} customStyle={customStyle}></DatePickerInput>
+        <DatePickerInput type="text" onClick={openClose} placeholder="MM/DD/YYYY" onChange={handleChange} onBlur={handleCheckDate} value={inputValue} customStyle={customStyle}></DatePickerInput>
         {isOpen === true ? <Calendar maxDate={maxDate} minDate={minDate} onSelection={handleDateSelection} onClose={handleCloseCalendar} onCancel={handleCancelButton} customStyle={customStyle} isSelected={selectedDate} /> : null}
       </PickerWrapper>
     </>

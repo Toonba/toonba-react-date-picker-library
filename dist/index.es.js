@@ -492,13 +492,20 @@ function DatePicker({
     setIsOpen(false);
   };
   const handleChange = event => {
-    if (isNaN(new Date(event.target.value))) {
-      alert('Invalid Format Date please use MM/DD/YYYY');
-      setInputValue('');
-    } else {
-      setInputValue(event.target.value);
-      setSelectedDate(new Date(event.target.value));
-      getData(new Date(event.target.value));
+    setInputValue(event.target.value);
+  };
+  const handleCheckDate = event => {
+    if (event.target.value !== '') {
+      if (isNaN(new Date(event.target.value))) {
+        alert('Invalid Format Date please use MM/DD/YYYY');
+        setInputValue('');
+      } else if (new Date(event.target.value).getTime() < minDate.getTime() || new Date(event.target.value).getTime() > maxDate.getTime()) {
+        alert('Date out of allowed Range');
+        setInputValue('');
+      } else {
+        setSelectedDate(new Date(event.target.value));
+        getData(new Date(event.target.value));
+      }
     }
   };
   useEffect(() => {
@@ -522,6 +529,7 @@ function DatePicker({
     onClick: openClose,
     placeholder: "MM/DD/YYYY",
     onChange: handleChange,
+    onBlur: handleCheckDate,
     value: inputValue,
     customStyle: customStyle
   }), isOpen === true ? /*#__PURE__*/React.createElement(Calendar, {

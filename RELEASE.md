@@ -39,3 +39,15 @@ improved consistency on how date are shown as string
 ## v1.0.10
 
 corrected bug on manually written date
+
+## v1.0.11
+
+Added checker to verify date is valide and within range
+
+## v1.0.12
+
+corrected bug
+
+## v1.0.13
+
+corrected bug
