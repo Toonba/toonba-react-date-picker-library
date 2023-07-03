@@ -3,7 +3,7 @@
 A flexible and customizable date picker component for React applications.
 
 <img width="400" alt="dark_mode_date_picker" src="./src/Asset/dark_mode_date_picker.png">
-<img width="400" alt="light_mode_date_picker" src="./src/Asset/light_mode_date_picker">
+<img width="400" alt="light_mode_date_picker" src="./src/Asset/light_mode_date_picker.png">
 
 # Installation
 
