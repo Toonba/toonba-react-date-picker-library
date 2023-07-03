@@ -2,8 +2,8 @@
 
 A flexible and customizable date picker component for React applications.
 
-<img width="400" alt="dark_mode_date_picker" src="https://github.com/Toonba/React_Date_Picker/assets/106684816/050fa93c-c271-461b-a8a4-fa0d823b38d9">
-<img width="400" alt="light_mode_date_picker" src="https://github.com/Toonba/React_Date_Picker/assets/106684816/92ae6698-e0bc-4705-9c2c-df2fb9c33b16">
+<img width="400" alt="dark_mode_date_picker" src="./src/Asset/dark_mode_date_picker.png">
+<img width="400" alt="light_mode_date_picker" src="./src/Asset/light_mode_date_picker">
 
 # Installation
 
@@ -36,8 +36,8 @@ function App() {
 The DatePicker component accepts the following props:
 
 <ul>
-  <li>minDate: Minimum selectable date.</li>
-  <li>maxDate: Maximum selectable date.</li>
+  <li>minDate: Minimum selectable date (must be a Date object).</li>
+  <li>maxDate: Maximum selectable date(must be a Date object).</li>
   <li>customeStyle: object containing custome Style</li>
   <li>getData : is the function that allow you to retrieve the date selected it will be a Date object</li>
   <li>inputReset : string that will allow you to reset the datePicker if you pass '' </li>

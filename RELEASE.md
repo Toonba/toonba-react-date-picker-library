@@ -51,3 +51,7 @@ corrected bug
 ## v1.0.13
 
 corrected bug
+
+## v1.0.14
+
+updated documentation for calendar component, and read me to specify min and maxDate have to be date objects

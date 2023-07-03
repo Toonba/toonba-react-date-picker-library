@@ -1,6 +1,6 @@
 {
   "name": "toonba-react-date-picker-library",
-  "version": "1.0.13",
+  "version": "1.0.14",
   "description": "A simple date picker react component ",
   "main": "dist/index.js",
   "module": "dist/index.es.js",

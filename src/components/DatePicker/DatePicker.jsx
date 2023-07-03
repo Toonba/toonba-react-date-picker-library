@@ -87,7 +87,6 @@ export function DatePicker({ maxDate, minDate, customStyle, getData, inputReset 
       alert('please select a date')
     } else {
       setIsOpen(false)
-      console.log(selectedDate)
     }
   }
 

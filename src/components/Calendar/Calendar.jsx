@@ -183,7 +183,10 @@ const ButtonContainer = styled.div`
  * @param {Date} maxDate maximum date it will be possible to reach with datePicker, you can change it in config.js
  * @param {Date} minDate minimum date it will be possible to reach with datePicker, you can change it in config.js
  * @param {Object} style regroup few parameter that can be easily changed to adjust component, you can change it in config.js
+ * @param {function} onSelection function allowing to recover selected date to put it in the input and store the date object
  * @param {function} onClose function allowing to close calendar and get selected value in parent component
+ * @param {function} onCancel function allowing to handle cancel button
+ * @param {Object} isSelected Date object allowing to directly open calendar with the good month and years when a date is already selected
  * @returns {Component} Calendar used in datepicker
  */
 
